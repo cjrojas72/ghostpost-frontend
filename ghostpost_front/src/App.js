@@ -83,6 +83,16 @@ class App extends React.Component {
     alert("dislike " + id);
   };
 
+  delete_action = (id) => {
+    fetch(`http://127.0.0.1:8000/posts/${id}/deleteview`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        this.updateState();
+      });
+    alert("deleted " + id);
+  };
+
   render() {
     return (
       <div className="app-div">
@@ -115,6 +125,9 @@ class App extends React.Component {
                 <button onClick={() => this.dislike_action(id)}>Dislike</button>
                 {post.down_votes}
               </p>
+              <br></br>
+              <br></br>
+              <button onClick={() => this.delete_action(id)}>DELETE</button>
               <hr></hr>
             </li>
           );
