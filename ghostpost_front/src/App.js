@@ -36,6 +36,15 @@ class App extends React.Component {
       });
   };
 
+  count_filter = () => {
+    fetch(" http://127.0.0.1:8000/posts/countview")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        this.setState({ posts_data: data });
+      });
+  };
+
   roast_filter = () => {
     fetch(" http://127.0.0.1:8000/posts/roast")
       .then((res) => res.json())
@@ -46,7 +55,7 @@ class App extends React.Component {
   };
 
   like_action = (id) => {
-    fetch(`http://127.0.0.1:8000/posts/${id}/LikeView`)
+    fetch(`http://127.0.0.1:8000/posts/${id}/likeview`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -55,7 +64,7 @@ class App extends React.Component {
   };
 
   dislike_action = (id) => {
-    fetch(`http://127.0.0.1:8000/posts/${id}/DislikeView`)
+    fetch(`http://127.0.0.1:8000/posts/${id}/dislikeview`)
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -77,6 +86,7 @@ class App extends React.Component {
           <button onClick={this.all_filter}>All Posts</button>
           <button onClick={this.boast_filter}>All Boasts</button>
           <button onClick={this.roast_filter}>All Roasts</button>
+          <button onClick={this.count_filter}>Order by like</button>
         </div>
         {this.state.posts_data.map((post) => {
           let id = post.post_id;
