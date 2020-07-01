@@ -18,6 +18,15 @@ class App extends React.Component {
       });
   }
 
+  updateState() {
+    fetch(" http://127.0.0.1:8000/posts/")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        this.setState({ posts_data: data });
+      });
+  }
+
   all_filter = () => {
     fetch(" http://127.0.0.1:8000/posts/")
       .then((res) => res.json())
@@ -59,8 +68,9 @@ class App extends React.Component {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        this.updateState();
       });
-    alert("like" + id);
+    alert("like " + id);
   };
 
   dislike_action = (id) => {
@@ -68,8 +78,9 @@ class App extends React.Component {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        this.updateState();
       });
-    alert("dislike" + id);
+    alert("dislike " + id);
   };
 
   render() {
@@ -82,6 +93,7 @@ class App extends React.Component {
             <a href="http://127.0.0.1:8000/addpost/">Post!</a>
           </button>
         </div>
+        <br></br>
         <div className="filters-div">
           <button onClick={this.all_filter}>All Posts</button>
           <button onClick={this.boast_filter}>All Boasts</button>
