@@ -36,3 +36,9 @@
     transform: rotate(360deg);
   }
 }
+
+/* custom app css */
+
+.app-div {
+  margin-left: 20px;
+}

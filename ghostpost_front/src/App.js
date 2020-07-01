@@ -45,9 +45,27 @@ class App extends React.Component {
       });
   };
 
+  like_action = (id) => {
+    fetch(`http://127.0.0.1:8000/posts/${id}/LikeView`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+    alert("like" + id);
+  };
+
+  dislike_action = (id) => {
+    fetch(`http://127.0.0.1:8000/posts/${id}/DislikeView`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+    alert("dislike" + id);
+  };
+
   render() {
     return (
-      <div className="App">
+      <div className="app-div">
         <h1>Ghost Post</h1>
         <div>
           <h3>Add a Boast or Roast!</h3>
@@ -61,13 +79,21 @@ class App extends React.Component {
           <button onClick={this.roast_filter}>All Roasts</button>
         </div>
         {this.state.posts_data.map((post) => {
+          let id = post.post_id;
           return (
-            <li key={post.id}>
+            <li key={id}>
               <p>choice: {post.choice}</p>
               <p>{post.body}</p>
               <p>{post.date_time}</p>
-              <p>Likes:{post.up_votes}</p>
-              <p>dislikes:{post.down_votes}</p>
+              <p>
+                <button onClick={() => this.like_action(id)}>Like</button>
+                {post.up_votes}
+              </p>
+              <p>
+                <button onClick={() => this.dislike_action(id)}>Dislike</button>
+                {post.down_votes}
+              </p>
+              <hr></hr>
             </li>
           );
         })}
