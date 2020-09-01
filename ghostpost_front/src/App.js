@@ -1,5 +1,8 @@
 import React from "react";
 import "./App.css";
+import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 class App extends React.Component {
   constructor(props) {
@@ -70,7 +73,7 @@ class App extends React.Component {
         console.log(data);
         this.updateState();
       });
-    alert("like " + id);
+    // alert("like " + id);
   };
 
   dislike_action = (id) => {
@@ -80,7 +83,7 @@ class App extends React.Component {
         console.log(data);
         this.updateState();
       });
-    alert("dislike " + id);
+    // alert("dislike " + id);
   };
 
   delete_action = (id) => {
@@ -90,13 +93,12 @@ class App extends React.Component {
         console.log(data);
         this.updateState();
       });
-    alert("deleted " + id);
+    // alert("deleted " + id);
   };
 
   render() {
     return (
       <div className="app-div">
-        <h1>Ghost Post</h1>
         <div>
           <h3>Add a Boast or Roast!</h3>
           <button>
@@ -113,23 +115,57 @@ class App extends React.Component {
         {this.state.posts_data.map((post) => {
           let id = post.post_id;
           return (
-            <li key={id}>
-              <p>choice: {post.choice}</p>
-              <p>{post.body}</p>
-              <p>{post.date_time}</p>
-              <p>
-                <button onClick={() => this.like_action(id)}>Like</button>
-                {post.up_votes}
-              </p>
-              <p>
-                <button onClick={() => this.dislike_action(id)}>Dislike</button>
-                {post.down_votes}
-              </p>
-              <br></br>
-              <br></br>
-              <button onClick={() => this.delete_action(id)}>DELETE</button>
-              <hr></hr>
-            </li>
+            <div>
+              <Card key={id} style={{ width: "18rem" }}>
+                <Card.Body>
+                  <Card.Title>choice: {post.choice}</Card.Title>
+                  <Card.Text>
+                    <p>{post.body}</p>
+                  </Card.Text>
+
+                  <Button variant="info" onClick={() => this.like_action(id)}>
+                    Like
+                  </Button>
+                  <strong> {post.up_votes}</strong>
+
+                  <Button
+                    variant="secondary"
+                    onClick={() => this.dislike_action(id)}
+                  >
+                    Dislike
+                  </Button>
+                  <strong> {post.down_votes} </strong>
+
+                  <br></br>
+                  <Button
+                    variant="danger"
+                    onClick={() => this.delete_action(id)}
+                  >
+                    DELETE
+                  </Button>
+                </Card.Body>
+              </Card>
+
+              {/* <li key={id}>
+                <p>choice: {post.choice}</p>
+                <p>{post.body}</p>
+                <p>{post.date_time}</p>
+                <p>
+                  <button onClick={() => this.like_action(id)}>Like</button>
+                  {post.up_votes}
+                </p>
+                <p>
+                  <button onClick={() => this.dislike_action(id)}>
+                    Dislike
+                  </button>
+                  {post.down_votes}
+                </p>
+                <br></br>
+                <br></br>
+                <button onClick={() => this.delete_action(id)}>DELETE</button>
+                <hr></hr>
+              </li> */}
+            </div>
           );
         })}
       </div>
