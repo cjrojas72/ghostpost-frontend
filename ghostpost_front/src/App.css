@@ -55,3 +55,7 @@
 .filters-div > Button {
   margin-left: 10px;
 }
+
+#postForm {
+  padding-top: 50px;
+}

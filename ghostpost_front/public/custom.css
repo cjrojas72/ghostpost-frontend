@@ -6,6 +6,9 @@ body {
 
 #title-header {
   text-align: center;
+  font-size: 70px;
+  margin-left: 30px;
+  margin-right: 20px;
 }
 
 #banner {
@@ -14,6 +17,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+#banner p {
+  font-size: larger;
+  margin-left: 10px;
 }
 
 .flex-tool {

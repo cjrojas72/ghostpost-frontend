@@ -49,20 +49,24 @@ class App extends React.Component {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        this.setState({ posts_data: data });
+        this.updateState();
       });
     e.preventDefault();
   };
 
+  // updates state for post body
   handleBodyChange = (e) => {
     this.setState({ body: e.target.value });
     console.log(this.state.body);
   };
 
+  // updates state for post choice
   handleChoiceChange = (e) => {
     this.setState({ choice: e.target.value });
     console.log(this.state.choice);
   };
+
+  // grabs all posts
   all_filter = () => {
     fetch(" http://127.0.0.1:8000/posts/")
       .then((res) => res.json())
@@ -72,6 +76,7 @@ class App extends React.Component {
       });
   };
 
+  // filters posts for boasts
   boast_filter = () => {
     fetch(" http://127.0.0.1:8000/posts/boast")
       .then((res) => res.json())
@@ -81,6 +86,7 @@ class App extends React.Component {
       });
   };
 
+  // orders posts by most likes
   count_filter = () => {
     fetch(" http://127.0.0.1:8000/posts/countview")
       .then((res) => res.json())
@@ -90,6 +96,7 @@ class App extends React.Component {
       });
   };
 
+  // filters poasts for roasts
   roast_filter = () => {
     fetch(" http://127.0.0.1:8000/posts/roast")
       .then((res) => res.json())
@@ -133,16 +140,16 @@ class App extends React.Component {
     return (
       <div className="app-div">
         <div>
-          <select
-            name="choice"
-            id="choice"
-            form="postForm"
-            onChange={this.handleChoiceChange}
-          >
-            <option value="BO">Boast</option>
-            <option value="RO">Roast</option>
-          </select>
           <form id="postForm" onSubmit={this.onSubmit} className="form-inline">
+            <select
+              name="choice"
+              id="choice"
+              form="postForm"
+              onChange={this.handleChoiceChange}
+            >
+              <option value="BO">Boast</option>
+              <option value="RO">Roast</option>
+            </select>
             <input
               type="text"
               name="body"
@@ -177,21 +184,35 @@ class App extends React.Component {
         <div className="card-list">
           {this.state.posts_data.map((post) => {
             let id = post.post_id;
+            let choiceString = "";
+            if (post.choice === "BO") {
+              choiceString = "Boast!";
+            } else {
+              choiceString = "Roast!";
+            }
             return (
-              <div>
+              <div key={id}>
                 <Card key={id} style={{ width: "600px", margin: "5px" }}>
                   <Card.Body>
-                    <Card.Title>choice: {post.choice}</Card.Title>
+                    <Card.Title>{choiceString}</Card.Title>
                     <Card.Text>{post.body}</Card.Text>
 
                     <hr></hr>
 
-                    <Button onClick={() => this.like_action(id)}>Like</Button>
+                    <button
+                      style={{ margin: "5px" }}
+                      onClick={() => this.like_action(id)}
+                    >
+                      Like
+                    </button>
                     <strong> {post.up_votes}</strong>
 
-                    <Button onClick={() => this.dislike_action(id)}>
+                    <button
+                      style={{ margin: "5px" }}
+                      onClick={() => this.dislike_action(id)}
+                    >
                       Dislike
-                    </Button>
+                    </button>
                     <strong> {post.down_votes} </strong>
 
                     <br></br>
