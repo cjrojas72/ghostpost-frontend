@@ -40,5 +40,18 @@
 /* custom app css */
 
 .app-div {
-  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+}
+
+.card-list {
+  margin-top: 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.filters-div > Button {
+  margin-left: 10px;
 }

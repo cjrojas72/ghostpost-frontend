@@ -9,6 +9,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       posts_data: [],
+      choice: "BO",
+      body: "",
     };
   }
 
@@ -30,6 +32,37 @@ class App extends React.Component {
       });
   }
 
+  onSubmit = (e) => {
+    let randomSTR = Math.random().toString(36).substr(2, 6);
+    const formData = {
+      post_id: randomSTR,
+      choice: this.state.choice,
+      body: this.state.body,
+    };
+    fetch(" http://127.0.0.1:8000/posts/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        this.setState({ posts_data: data });
+      });
+    e.preventDefault();
+  };
+
+  handleBodyChange = (e) => {
+    this.setState({ body: e.target.value });
+    console.log(this.state.body);
+  };
+
+  handleChoiceChange = (e) => {
+    this.setState({ choice: e.target.value });
+    console.log(this.state.choice);
+  };
   all_filter = () => {
     fetch(" http://127.0.0.1:8000/posts/")
       .then((res) => res.json())
@@ -100,74 +133,81 @@ class App extends React.Component {
     return (
       <div className="app-div">
         <div>
-          <h3>Add a Boast or Roast!</h3>
-          <button>
-            <a href="http://127.0.0.1:8000/addpost/">Post!</a>
-          </button>
+          <select
+            name="choice"
+            id="choice"
+            form="postForm"
+            onChange={this.handleChoiceChange}
+          >
+            <option value="BO">Boast</option>
+            <option value="RO">Roast</option>
+          </select>
+          <form id="postForm" onSubmit={this.onSubmit} className="form-inline">
+            <input
+              type="text"
+              name="body"
+              value={this.state.body}
+              onChange={this.handleBodyChange}
+              className="form-control"
+              placeholder="add a boast or roast!"
+            />
+            <Button type="submit" variant="primary">
+              Post!
+              {/* <a style={{ color: "white" }} href="http://127.0.0.1:8000/addpost/">
+              Submit a Post!
+            </a> */}
+            </Button>
+          </form>
         </div>
         <br></br>
         <div className="filters-div">
-          <button onClick={this.all_filter}>All Posts</button>
-          <button onClick={this.boast_filter}>All Boasts</button>
-          <button onClick={this.roast_filter}>All Roasts</button>
-          <button onClick={this.count_filter}>Order by like</button>
+          <Button variant="info" onClick={this.all_filter}>
+            All Posts
+          </Button>
+          <Button variant="info" onClick={this.boast_filter}>
+            All Boasts
+          </Button>
+          <Button variant="info" onClick={this.roast_filter}>
+            All Roasts
+          </Button>
+          <Button variant="info" onClick={this.count_filter}>
+            Order by like
+          </Button>
         </div>
-        {this.state.posts_data.map((post) => {
-          let id = post.post_id;
-          return (
-            <div>
-              <Card key={id} style={{ width: "18rem" }}>
-                <Card.Body>
-                  <Card.Title>choice: {post.choice}</Card.Title>
-                  <Card.Text>
-                    <p>{post.body}</p>
-                  </Card.Text>
+        <div className="card-list">
+          {this.state.posts_data.map((post) => {
+            let id = post.post_id;
+            return (
+              <div>
+                <Card key={id} style={{ width: "600px", margin: "5px" }}>
+                  <Card.Body>
+                    <Card.Title>choice: {post.choice}</Card.Title>
+                    <Card.Text>{post.body}</Card.Text>
 
-                  <Button variant="info" onClick={() => this.like_action(id)}>
-                    Like
-                  </Button>
-                  <strong> {post.up_votes}</strong>
+                    <hr></hr>
 
-                  <Button
-                    variant="secondary"
-                    onClick={() => this.dislike_action(id)}
-                  >
-                    Dislike
-                  </Button>
-                  <strong> {post.down_votes} </strong>
+                    <Button onClick={() => this.like_action(id)}>Like</Button>
+                    <strong> {post.up_votes}</strong>
 
-                  <br></br>
-                  <Button
-                    variant="danger"
-                    onClick={() => this.delete_action(id)}
-                  >
-                    DELETE
-                  </Button>
-                </Card.Body>
-              </Card>
+                    <Button onClick={() => this.dislike_action(id)}>
+                      Dislike
+                    </Button>
+                    <strong> {post.down_votes} </strong>
 
-              {/* <li key={id}>
-                <p>choice: {post.choice}</p>
-                <p>{post.body}</p>
-                <p>{post.date_time}</p>
-                <p>
-                  <button onClick={() => this.like_action(id)}>Like</button>
-                  {post.up_votes}
-                </p>
-                <p>
-                  <button onClick={() => this.dislike_action(id)}>
-                    Dislike
-                  </button>
-                  {post.down_votes}
-                </p>
-                <br></br>
-                <br></br>
-                <button onClick={() => this.delete_action(id)}>DELETE</button>
-                <hr></hr>
-              </li> */}
-            </div>
-          );
-        })}
+                    <br></br>
+                    <br></br>
+                    <Button
+                      variant="danger"
+                      onClick={() => this.delete_action(id)}
+                    >
+                      DELETE
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }

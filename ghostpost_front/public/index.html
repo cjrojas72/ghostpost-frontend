@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="%PUBLIC_URL%/Ghost_Emoji.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -24,12 +24,22 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+    <link rel="stylesheet" href="custom.css" type="text/css" />
     <title>Ghost Post</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <h1>Ghost Post</h1>
-    <div id="root"></div>
+    <div class="flex-tool">
+      <div id="banner">
+        <h1 id="title-header">Ghost Post</h1>
+        <p>
+          The Ghost Post is a website where people can anonymously post Boasts
+          or Roasts of whatever they want. The Frontend of the app is built in
+          React and uses the Django REST framework to send and retrieve posts.
+        </p>
+      </div>
+      <div id="root"></div>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
