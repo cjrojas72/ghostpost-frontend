@@ -3,7 +3,6 @@ import "./App.css";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Moment from "react-moment";
 
 class App extends React.Component {
   constructor(props) {
@@ -201,11 +200,9 @@ class App extends React.Component {
               <div key={id}>
                 <Card key={id} style={{ width: "600px", margin: "5px" }}>
                   <Card.Body>
-                    <Card.Title>
-                      {choiceString}
-                      <Moment parse="YYYY-MM-DD">{post.date_time}</Moment>
-                    </Card.Title>
+                    <Card.Title>{choiceString}</Card.Title>
                     <Card.Text>{post.body}</Card.Text>
+                    <p>{post.date_time}</p>
 
                     <hr></hr>
 
