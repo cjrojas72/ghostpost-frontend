@@ -7,7 +7,6 @@ body {
 #title-header {
   text-align: center;
   font-size: 70px;
-  margin-left: 30px;
   margin-right: 20px;
 }
 
@@ -26,6 +25,11 @@ body {
 
 .flex-tool {
   display: flex;
+}
+
+.center-tool {
+  align-items: center;
+  justify-content: center;
 }
 
 #root {

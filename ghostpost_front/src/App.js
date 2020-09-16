@@ -3,6 +3,7 @@ import "./App.css";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Moment from "react-moment";
 
 class App extends React.Component {
   constructor(props) {
@@ -33,7 +34,10 @@ class App extends React.Component {
   }
 
   onSubmit = (e) => {
+    e.preventDefault();
+    // helps to give post a random id
     let randomSTR = Math.random().toString(36).substr(2, 6);
+    // end
     const formData = {
       post_id: randomSTR,
       choice: this.state.choice,
@@ -49,9 +53,9 @@ class App extends React.Component {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        this.setState({ body: "" });
         this.updateState();
       });
-    e.preventDefault();
   };
 
   // updates state for post body
@@ -106,6 +110,7 @@ class App extends React.Component {
       });
   };
 
+  //handles liking a post
   like_action = (id) => {
     fetch(`http://127.0.0.1:8000/posts/${id}/likeview`)
       .then((res) => res.json())
@@ -116,6 +121,7 @@ class App extends React.Component {
     // alert("like " + id);
   };
 
+  //handles disliking a post
   dislike_action = (id) => {
     fetch(`http://127.0.0.1:8000/posts/${id}/dislikeview`)
       .then((res) => res.json())
@@ -126,6 +132,7 @@ class App extends React.Component {
     // alert("dislike " + id);
   };
 
+  //handles deleting a post
   delete_action = (id) => {
     fetch(`http://127.0.0.1:8000/posts/${id}/deleteview`)
       .then((res) => res.json())
@@ -194,7 +201,10 @@ class App extends React.Component {
               <div key={id}>
                 <Card key={id} style={{ width: "600px", margin: "5px" }}>
                   <Card.Body>
-                    <Card.Title>{choiceString}</Card.Title>
+                    <Card.Title>
+                      {choiceString}
+                      <Moment parse="YYYY-MM-DD">{post.date_time}</Moment>
+                    </Card.Title>
                     <Card.Text>{post.body}</Card.Text>
 
                     <hr></hr>
