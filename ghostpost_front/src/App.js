@@ -205,7 +205,7 @@ class App extends React.Component {
                     <Card.Title>{choiceString}</Card.Title>
                     <Card.Text>{post.body}</Card.Text>
                     <p>
-                      <Moment format="YYYY/MM/DD HH:mm">{post_date}</Moment>
+                      <Moment format="MMMM Do YYYY, h:mm a">{post_date}</Moment>
                     </p>
 
                     <hr></hr>
