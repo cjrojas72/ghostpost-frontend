@@ -3,6 +3,7 @@ import "./App.css";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Moment from "react-moment";
 
 class App extends React.Component {
   constructor(props) {
@@ -191,6 +192,7 @@ class App extends React.Component {
           {this.state.posts_data.map((post) => {
             let id = post.post_id;
             let choiceString = "";
+            let post_date = post.date_time;
             if (post.choice === "BO") {
               choiceString = "Boast!";
             } else {
@@ -202,7 +204,9 @@ class App extends React.Component {
                   <Card.Body>
                     <Card.Title>{choiceString}</Card.Title>
                     <Card.Text>{post.body}</Card.Text>
-                    <p>{post.date_time}</p>
+                    <p>
+                      <Moment format="YYYY/MM/DD HH:mm">{post_date}</Moment>
+                    </p>
 
                     <hr></hr>
 
